@@ -1,0 +1,27 @@
+# Xcode user data
+xcuserdata/
+*.xcuserstate
+*.xccheckout
+*.xcscmblueprint
+
+# Build output
+build/
+DerivedData/
+.build/
+
+# Swift Package Manager
+.swiftpm/
+Packages/
+Package.resolved
+
+# Generated project (recreate with XcodeGen)
+CarPlayYT.xcodeproj/
+
+# macOS
+.DS_Store
+
+# Secrets and signing
+*.p12
+*.mobileprovision
+*.cer
+*.key
