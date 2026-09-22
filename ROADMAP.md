@@ -51,6 +51,23 @@
    <https://developer.apple.com/download/files/CarPlay-Developer-Guide.pdf>
    и WWDC25 сессией 216 при реализации Фазы 3.
 
+6. **CarPlay Simulator сейчас физически сломан в Xcode 27 (DeviceHub) на
+   публичных сборках macOS — это баг Apple, не наша ошибка.** DeviceHub
+   (замена Simulator.app) содержит CarPlay-плагин, но он гейтится
+   internal-only entitlements (`com.apple.internal.carplay.iap` и т.д.),
+   которых нет на публичных машинах — пункт CarPlay не появляется в UI
+   вообще, не серый, не задизейбленный, а просто отсутствует. Заведённый
+   баг: <https://github.com/feedback-assistant/reports/issues/842>
+   (FB24785359), без ответа Apple на момент проверки (сентябрь 2026).
+   Старый отдельный `CarPlay Simulator.app` (из "Additional Tools for
+   Xcode") тоже не спасает — он работает только с реальным iPhone по USB,
+   с симулятором не связывается. **Вывод: проверить реальное подключение
+   `CPTemplateApplicationSceneDelegate` сейчас можно только на настоящем
+   iPhone** — либо через `CarPlay Simulator.app` + iPhone по USB (эмулирует
+   машину), либо сразу в реальной машине/магнитоле с CarPlay. Смысла биться
+   в DeviceHub дальше нет, ждём фикса от Apple или делаем на реальном
+   устройстве.
+
 ## Фаза 0 — проверить AirPlay-путь на реальном железе (сделать первым)
 
 Собрать текущий билд, включить видео в `PlayerScreen`, нажать AirPlay-кнопку
