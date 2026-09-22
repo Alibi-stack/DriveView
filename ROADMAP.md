@@ -75,14 +75,33 @@
       ([Sources/CarPlay/CarPlaySceneDelegate.swift](Sources/CarPlay/CarPlaySceneDelegate.swift)).
 - [x] `AppEnvironment` — общая точка доступа к `LibraryStore` для SwiftUI и
       CarPlay-сцены ([Sources/App/AppEnvironment.swift](Sources/App/AppEnvironment.swift)).
-- [ ] **Проверить в CarPlay Simulator (Xcode), что сцена вообще
-      подключается и показывает список.** Не проверено — на машине сборки
-      нет полного Xcode, только Command Line Tools. Это первый шаг, который
-      нужно сделать перед тем как писать что-либо дальше по CarPlay.
-- [ ] Смёрджить [Sources/Resources/CarPlayScene.fragment.plist](Sources/Resources/CarPlayScene.fragment.plist)
-      в `UIApplicationSceneManifest → UISceneConfigurations` основного
-      Info.plist для локального теста в симуляторе (без entitlement
-      симулятор всё равно должен показать сцену в дев-режиме).
+- [x] **Собрано реально в Xcode 27 (`xcodegen generate` + `xcodebuild`, оба
+      таргета, симулятор).** Попутно нашлись и починены два независимых
+      бага:
+      - в исходном `Info.plist` отсутствовал `CFBundleExecutable` — из-за
+        этого сборка вообще не устанавливалась на симулятор/устройство
+        (`missing or invalid CFBundleExecutable`), никак не связано с
+        CarPlay, баг с первого прототипа;
+      - в `BroadcastExtension/SampleHandler.swift` использовался
+        несуществующий `CIImageRepresentationOption.lossyCompressionQuality`
+        — не компилировалось. Поправлено на ключ ImageIO
+        `kCGImageDestinationLossyCompressionQuality`.
+      После фиксов оба таргета (`DriveView`, `DriveViewBroadcastExtension`)
+      собираются и устанавливаются на симулятор без ошибок.
+- [x] Временно смёрджил `CarPlayScene.fragment.plist` в `Info.plist`,
+      собрал и установил — приложение с этой конфигурацией устанавливается
+      и запускается нормально. Затем откатил обратно до фрагмента (как и
+      задумано — не декларировать CarPlay-роль в сборке до реального
+      entitlement).
+- [ ] **Не проверено: реальное подключение к CarPlay Simulator (I/O →
+      External Displays → CarPlay в Simulator.app) и вызов
+      `templateApplicationScene(_:didConnect:)`.** Среда сборки — headless
+      macOS без доступа к оконному серверу (нет GUI, `osascript`/System
+      Events не видит процесс Simulator). Это последний шаг, который может
+      сделать только тот, у кого есть реальный Xcode с экраном: смёрджить
+      `CarPlayScene.fragment.plist` в `Info.plist` (как я делал временно),
+      собрать на симулятор, открыть CarPlay-дисплей и убедиться, что
+      появляется список DriveView.
 
 ## Фаза 3 — реальное видео на экране CarPlay (нужен entitlement)
 

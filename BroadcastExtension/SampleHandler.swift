@@ -101,8 +101,10 @@ final class SampleHandler: RPBroadcastSampleHandler {
             ))
         }
 
+        // .lossyCompressionQuality не существует в CIImageRepresentationOption —
+        // это ключ ImageIO, оборачивается вручную по raw-значению.
         let options: [CIImageRepresentationOption: Any] = [
-            .lossyCompressionQuality: jpegQuality
+            CIImageRepresentationOption(rawValue: kCGImageDestinationLossyCompressionQuality as String): jpegQuality
         ]
         guard let data = context.jpegRepresentation(
             of: image,
