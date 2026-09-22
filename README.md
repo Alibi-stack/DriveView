@@ -7,6 +7,8 @@ DriveView — экспериментальное iOS-приложение для
 CarPlay. Автомобильная сцена уже подготовлена в исходниках, но включается только
 после получения официального CarPlay Video entitlement от Apple.
 
+Актуальный план и статус по фазам — в [ROADMAP.md](ROADMAP.md).
+
 ## Текущее состояние
 
 Версия `0.2.0` содержит:
@@ -114,8 +116,14 @@ Broadcast Extension. Затем в Xcode убедитесь, что в Signing &
 ## Подключение CarPlay
 
 Код автомобильной поверхности находится в
-`Sources/CarPlay/CarPlayMirrorWindowSceneDelegate.swift`. Он использует тот же
-приёмник кадров, что и предпросмотр на iPhone.
+`Sources/CarPlay/CarPlaySceneDelegate.swift`. Сцена подключается через
+`CPTemplateApplicationSceneSessionRoleApplication` и
+`CPTemplateApplicationSceneDelegate` — это единственная существующая точка
+входа в CarPlay (в т.ч. для Video-категории); произвольный `UIWindowScene`
+CarPlay не подключает. Пока показывает список из библиотеки как проверку
+связи; передача кадра из зеркалирования на видео-поверхность CarPlay —
+следующий шаг после подтверждения точного API по CarPlay Developer Guide
+(см. ROADMAP.md).
 
 После получения `com.apple.developer.carplay-video` необходимо:
 

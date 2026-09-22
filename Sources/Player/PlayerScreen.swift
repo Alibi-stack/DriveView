@@ -1,3 +1,4 @@
+import AVFoundation
 import AVKit
 import SwiftUI
 
@@ -8,6 +9,7 @@ struct PlayerScreen: View {
     let request: PlayerRequest
     @State private var player: AVPlayer
     @State private var timeObserver: Any?
+    @State private var isExternalPlaybackActive = false
 
     init(request: PlayerRequest) {
         self.request = request
@@ -24,7 +26,9 @@ struct PlayerScreen: View {
                 HStack {
                     AirPlayRoutePicker()
                         .frame(width: 44, height: 44)
-                    Text("Выберите AirPlay-экран системной кнопкой")
+                    Text(isExternalPlaybackActive
+                         ? "Идёт на внешнем экране (AirPlay)"
+                         : "Выберите AirPlay-экран системной кнопкой")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                     Spacer()
@@ -41,6 +45,7 @@ struct PlayerScreen: View {
                 }
             }
             .onAppear {
+                configureAudioSession()
                 if request.startPosition > 0 {
                     player.seek(to: CMTime(seconds: request.startPosition, preferredTimescale: 600))
                 }
@@ -53,7 +58,18 @@ struct PlayerScreen: View {
                 timeObserver = nil
                 player.pause()
             }
+            .onReceive(player.publisher(for: \.isExternalPlaybackActive)) { active in
+                isExternalPlaybackActive = active
+            }
         }
+    }
+
+    private func configureAudioSession() {
+        // .playback + UIBackgroundModes=audio держат AirPlay-маршрут (в т.ч.
+        // видео в машину) активным, когда телефон сворачивается или блокируется.
+        let session = AVAudioSession.sharedInstance()
+        try? session.setCategory(.playback, mode: .moviePlayback)
+        try? session.setActive(true)
     }
 
     private func installProgressObserver() {

@@ -2,17 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>UIWindowSceneSessionRoleCarPlay</key>
+    <key>CPTemplateApplicationSceneSessionRoleApplication</key>
     <array>
         <dict>
             <key>UISceneClassName</key>
-            <string>UIWindowScene</string>
+            <string>CPTemplateApplicationScene</string>
             <key>UISceneConfigurationName</key>
-            <string>DriveView CarPlay Video</string>
+            <string>DriveView CarPlay</string>
             <key>UISceneDelegateClassName</key>
-            <string>$(PRODUCT_MODULE_NAME).CarPlayMirrorWindowSceneDelegate</string>
+            <string>$(PRODUCT_MODULE_NAME).CarPlaySceneDelegate</string>
         </dict>
     </array>
 </dict>
 </plist>
-
