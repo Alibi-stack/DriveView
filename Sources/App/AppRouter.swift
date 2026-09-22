@@ -7,6 +7,7 @@ final class AppRouter: ObservableObject {
         case home
         case browser
         case library
+        case mirror
         case settings
     }
 

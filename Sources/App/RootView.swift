@@ -17,6 +17,10 @@ struct RootView: View {
                 .tabItem { Label("Библиотека", systemImage: "rectangle.stack") }
                 .tag(AppRouter.Section.library)
 
+            MirrorView()
+                .tabItem { Label("Экран", systemImage: "rectangle.on.rectangle") }
+                .tag(AppRouter.Section.mirror)
+
             SettingsView()
                 .tabItem { Label("Настройки", systemImage: "gearshape") }
                 .tag(AppRouter.Section.settings)

@@ -13,6 +13,7 @@ struct SettingsView: View {
 
                 Section("Внешние экраны") {
                     Label("AirPlay доступен в плеере", systemImage: "airplayvideo")
+                    Label("Зеркалирование через ReplayKit", systemImage: "rectangle.on.rectangle")
                     Label("CarPlay — после получения доступа", systemImage: "car")
                         .foregroundStyle(.secondary)
                 }
@@ -24,7 +25,7 @@ struct SettingsView: View {
                 }
 
                 Section {
-                    Text("DriveView 0.1.0")
+                    Text("DriveView 0.2.0")
                         .foregroundStyle(.secondary)
                 }
             }
@@ -39,4 +40,3 @@ struct SettingsView: View {
         }
     }
 }
-

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>UIWindowSceneSessionRoleCarPlay</key>
+    <array>
+        <dict>
+            <key>UISceneClassName</key>
+            <string>UIWindowScene</string>
+            <key>UISceneConfigurationName</key>
+            <string>DriveView CarPlay Video</string>
+            <key>UISceneDelegateClassName</key>
+            <string>$(PRODUCT_MODULE_NAME).CarPlayMirrorWindowSceneDelegate</string>
+        </dict>
+    </array>
+</dict>
+</plist>
+
